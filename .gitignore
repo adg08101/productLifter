@@ -1,2 +1,3 @@
-productLifter-backend/node_modules
-productLifter-backend/.env
+product-lifter-backend/node_modules
+product-lifter-backend/.env
+product-lifter-backend/storage/images/
