@@ -1,11 +1,11 @@
 import react from 'react'
-import { Section, Button } from 'react-bulma-components'
+import { Section, Button, Container } from 'react-bulma-components'
 
 const AddButton = ({ text }) => {
   return (
-    <Section className='is-pulled-right'>
-      <Button color='info'>{ text }</Button>
-    </Section>
+    <div className='is-pulled-right'>
+      <Button color='info'>{text}</Button>
+    </div>
   )
 }
 

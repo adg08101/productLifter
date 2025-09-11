@@ -3,18 +3,14 @@ import { Section, Hero, Heading } from 'react-bulma-components'
 
 const ProductHeader = ({ title }) => {
   return (
-    <Section>
-      <Hero>
-        <Hero.Header>
-
-        </Hero.Header>
-        <Hero.Body>
-          <Heading class='title has-text-centered'>
-            { title }
-          </Heading>
-        </Hero.Body>
-      </Hero>
-    </Section>
+    <Hero>
+      <Hero.Header />
+      <Hero.Body>
+        <Heading className='title has-text-centered'>
+          {title}
+        </Heading>
+      </Hero.Body>
+    </Hero>
   )
 }
 
