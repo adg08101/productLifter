@@ -1,32 +1,23 @@
-import { react, useState } from 'react'
-import { Button, Container, Section, Box, Tag } from 'react-bulma-components'
-import ProductHeader from './ProductHeader'
-import AddButton from './AddButton'
-import Loading from './Loading'
+import React from "react";
+import { Section, Box, Tag } from "react-bulma-components";
+import ProductHeader from "./ProductLayout/ProductHeader";
+import AddButton from "./ProductLayout/AddButton";
+import ProductView from "./ProductLayout/ProductView";
+import ShareStatus from "./ShareStatus"
 
 const ProductLayout = () => {
-  const [isLoading, setIsLoading] = useState(true)
-
   return (
     <>
-      <ProductHeader title='Products List' />
+      <ProductHeader title="Products List" />
       <Section>
-        <AddButton text='Add button' />
-        {isLoading
-          ? <Loading />
-          : <Tag>do_fetch</Tag>}
+        <AddButton text="Add button" />
+        <ProductView />
       </Section>
       <Section>
-        <Button
-          onClick={() => {
-            setIsLoading(!isLoading)
-          }}
-        >
-          {isLoading ? 'do_the_fetch' : 'stop_the_fetch'}
-        </Button>
+        <ShareStatus></ShareStatus>
       </Section>
     </>
-  )
-}
+  );
+};
 
-export default ProductLayout
+export default ProductLayout;

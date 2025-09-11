@@ -1,4 +1,4 @@
-import react from 'react'
+import React from 'react'
 import { Section, Button, Container } from 'react-bulma-components'
 
 const AddButton = ({ text }) => {

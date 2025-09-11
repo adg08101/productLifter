@@ -1,4 +1,5 @@
-import react from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Section, Hero, Heading } from 'react-bulma-components'
 
 const ProductHeader = ({ title }) => {
@@ -12,6 +13,10 @@ const ProductHeader = ({ title }) => {
       </Hero.Body>
     </Hero>
   )
+}
+
+ProductHeader.propTypes = {
+  title: PropTypes.string.isRequired
 }
 
 export default ProductHeader
