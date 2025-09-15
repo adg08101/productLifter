@@ -1,20 +1,22 @@
-import { react, useState } from 'react'
-import { Section, Button } from 'react-bulma-components'
+import { useState, useEffect } from "react";
+import { Section, Button } from "react-bulma-components";
 
-const ManualFetch = () => {
-    const [isLoading, setIsLoading] = useState(false)
+const ManualFetch = ({ onClickFunc }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-    return (
-        <Section>
-            <Button
-                onClick={() => {
-                    setIsLoading(!isLoading)
-                }}
-            >
-                {isLoading ? 'do_the_fetch' : 'stop_the_fetch'}
-            </Button>
-        </Section>
-    )
-}
+  return (
+    <Section>
+      <Button
+        disabled={!isLoading}
+        onClick={() => {
+          setIsLoading(false);
+          onClickFunc();
+        }}
+      >
+        {isLoading ? "stop_fetch" : "done"}
+      </Button>
+    </Section>
+  );
+};
 
-export default ManualFetch
+export default ManualFetch;
