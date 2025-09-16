@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
+import ManualFetch from "./ManualFetch";
 import axios from "axios";
 
 async function getProducts() {
@@ -18,6 +19,7 @@ async function getProducts() {
 const ProductList = ({ load = true }) => {
   const [products, setProducts] = useState([]);
   const [productCounter, setProductCounter] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     async function loadProducts() {
@@ -25,15 +27,29 @@ const ProductList = ({ load = true }) => {
       if (response.status === 200) {
         setProducts(response.data);
         setProductCounter(Object.keys(response.data).length);
+        if (productCounter === 0) {
+          console.log("No products");
+        }
       }
     }
 
     loadProducts();
-  }, [productCounter]);
+  }, [productCounter, refresh]);
 
   console.log(products);
 
-  return load ? <Loading></Loading> : null;
+  return (
+    <>
+      {load ? <Loading></Loading> : null}
+      <ManualFetch
+        onClickFunc={() => {
+          setRefresh(!refresh);
+        }}
+        messageOne="refresh_now"
+        messageTwo="refresh_now"
+      ></ManualFetch>
+    </>
+  );
 };
 
 export default ProductList;

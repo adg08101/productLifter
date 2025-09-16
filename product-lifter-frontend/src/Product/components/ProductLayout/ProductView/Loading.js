@@ -1,5 +1,5 @@
 import React from "react";
-import { Section, Loader, Container } from "react-bulma-components";
+import { Loader } from "react-bulma-components";
 
 const Loading = ({ visible = true }) => {
   return (
