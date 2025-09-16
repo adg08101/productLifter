@@ -3,7 +3,7 @@ import ProductList from "./ProductView/ProductList";
 import ManualFetch from "./ProductView/ManualFetch";
 
 const ProductView = () => {
-  var showManualFetch = true;
+  var showManualFetch = false;
   const [load, setLoad] = useState(true);
 
   const onClickFunc = () => {
@@ -14,7 +14,11 @@ const ProductView = () => {
     <>
       <ProductList load={load}></ProductList>
       {showManualFetch ? (
-        <ManualFetch onClickFunc={onClickFunc}></ManualFetch>
+        <ManualFetch
+          onClickFunc={onClickFunc}
+          messageOne="fetch_now"
+          messageTwo="done"
+        ></ManualFetch>
       ) : null}
     </>
   );

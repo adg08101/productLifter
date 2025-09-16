@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Section, Button } from "react-bulma-components";
 
-const ManualFetch = ({ onClickFunc }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const ManualFetch = ({ onClickFunc, messageOne, messageTwo }) => {
+  const [enabled, setIsEnabled] = useState(true);
 
   return (
     <Section>
       <Button
-        disabled={!isLoading}
+        disabled={!enabled}
         onClick={() => {
-          setIsLoading(false);
+          if (messageOne !== messageTwo) {
+            setIsEnabled(!enabled);
+          }
+
           onClickFunc();
         }}
       >
-        {isLoading ? "stop_fetch" : "done"}
+        {enabled ? messageOne : messageTwo}
       </Button>
     </Section>
   );
