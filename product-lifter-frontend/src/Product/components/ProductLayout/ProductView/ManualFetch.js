@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import { Section, Button } from "react-bulma-components";
 
 const ManualFetch = ({ onClickFunc, messageOne, messageTwo }) => {

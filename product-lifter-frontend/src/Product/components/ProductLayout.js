@@ -1,5 +1,5 @@
 import React from "react";
-import { Section, Box, Tag } from "react-bulma-components";
+import { Section } from "react-bulma-components";
 import ProductHeader from "./ProductLayout/ProductHeader";
 import AddButton from "./ProductLayout/AddButton";
 import ProductView from "./ProductLayout/ProductView";

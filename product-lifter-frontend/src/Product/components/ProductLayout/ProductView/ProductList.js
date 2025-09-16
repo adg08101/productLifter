@@ -20,6 +20,7 @@ const ProductList = ({ load = true }) => {
   const [products, setProducts] = useState([]);
   const [productCounter, setProductCounter] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadProducts() {
@@ -30,17 +31,16 @@ const ProductList = ({ load = true }) => {
         if (productCounter === 0) {
           console.log("No products");
         }
+        setIsLoading(false);
       }
     }
 
     loadProducts();
   }, [productCounter, refresh]);
 
-  console.log(products);
-
   return (
     <>
-      {load ? <Loading></Loading> : null}
+      {isLoading ? <Loading></Loading> : null}
       <ManualFetch
         onClickFunc={() => {
           setRefresh(!refresh);
