@@ -1,3 +1,4 @@
 product-lifter-backend/node_modules
 product-lifter-backend/.env
 product-lifter-backend/storage/images/
+product-lifter-frontend/.env
