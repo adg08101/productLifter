@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
 import ManualFetch from "./ManualFetch";
+import AddButton from "../AddButton";
+import Card from "./Card";
+import { Columns, Pagination } from "react-bulma-components";
+import Paginator from "./Paginator";
 import axios from "axios";
+import { element } from "prop-types";
 
 async function getProducts() {
   try {
@@ -40,7 +45,18 @@ const ProductList = ({ load = true }) => {
 
   return (
     <>
-      {isLoading ? <Loading></Loading> : null}
+      {isLoading ? (
+        <Loading></Loading>
+      ) : (
+        <>
+          <Columns>
+            <Card props={products[0]}></Card>
+            <Card props={products[1]}></Card>
+            <Card props={products[2]}></Card>
+            <Card props={products[3]}></Card>
+          </Columns>
+        </>
+      )}
       <ManualFetch
         onClickFunc={() => {
           setRefresh(!refresh);
@@ -48,6 +64,9 @@ const ProductList = ({ load = true }) => {
         messageOne="refresh_now"
         messageTwo="refresh_now"
       ></ManualFetch>
+      <AddButton text="Add button" />
+      <Pagination current={3} total={5} showFirstLast></Pagination>
+      <Paginator></Paginator>
     </>
   );
 };

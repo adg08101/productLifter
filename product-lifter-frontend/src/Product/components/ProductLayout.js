@@ -1,7 +1,6 @@
 import React from "react";
 import { Section } from "react-bulma-components";
 import ProductHeader from "./ProductLayout/ProductHeader";
-import AddButton from "./ProductLayout/AddButton";
 import ProductView from "./ProductLayout/ProductView";
 
 const ProductLayout = () => {
@@ -9,7 +8,6 @@ const ProductLayout = () => {
     <>
       <ProductHeader title="Products List" />
       <Section>
-        <AddButton text="Add button" />
         <ProductView />
       </Section>
     </>
