@@ -12,7 +12,7 @@ const ProductView = () => {
 
   return (
     <>
-      <ProductList load={load}></ProductList>
+      <ProductList></ProductList>
       {showManualFetch ? (
         <ManualFetch
           onClickFunc={onClickFunc}

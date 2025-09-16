@@ -1,12 +1,12 @@
-import React from 'react'
-import { Section, Button, Container } from 'react-bulma-components'
+import React from "react";
+import { Button } from "react-bulma-components";
 
 const AddButton = ({ text }) => {
   return (
-    <div className='is-pulled-right'>
-      <Button color='info'>{text}</Button>
+    <div className="is-pulled-right">
+      <Button color="info">{text}</Button>
     </div>
-  )
-}
+  );
+};
 
-export default AddButton
+export default AddButton;

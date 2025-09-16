@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
 import ManualFetch from "./ManualFetch";
-import axios from "axios";
+import AddButton from "../AddButton";
+import Card from "./Card";
+import { Columns, Pagination, Section } from "react-bulma-components";
+import Paginator from "./Paginator";
+import { getProducts } from "../../../../libs/axios";
 
-async function getProducts() {
-  try {
-    const response = await axios({
-      url: `http://localhost:8080/v1/getAllProducts`,
-      method: "GET",
-    });
-
-    return response;
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-const ProductList = ({ load = true }) => {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [productCounter, setProductCounter] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadProducts() {
@@ -30,17 +22,27 @@ const ProductList = ({ load = true }) => {
         if (productCounter === 0) {
           console.log("No products");
         }
+        setIsLoading(false);
       }
     }
 
     loadProducts();
   }, [productCounter, refresh]);
 
-  console.log(products);
-
   return (
     <>
-      {load ? <Loading></Loading> : null}
+      {isLoading ? (
+        <Loading></Loading>
+      ) : (
+        <>
+          <Columns>
+            <Card props={products[0]}></Card>
+            <Card props={products[1]}></Card>
+            <Card props={products[2]}></Card>
+            <Card props={products[3]}></Card>
+          </Columns>
+        </>
+      )}
       <ManualFetch
         onClickFunc={() => {
           setRefresh(!refresh);
@@ -48,6 +50,10 @@ const ProductList = ({ load = true }) => {
         messageOne="refresh_now"
         messageTwo="refresh_now"
       ></ManualFetch>
+      <AddButton text="Add button" />
+      <Section>
+        <Paginator current={1} total={productCounter}></Paginator>
+      </Section>
     </>
   );
 };
