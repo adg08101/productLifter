@@ -9,6 +9,7 @@ import { getProducts } from "../../../../libs/axios";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [productsPage, setProductsPage] = useState([]);
   const [productCounter, setProductCounter] = useState(0);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,22 +20,17 @@ const ProductList = () => {
     async function loadProducts() {
       const response = await getProducts();
       if (response.status === 200) {
-        const auxArray = response.data;
-        const fragmentSize = productPaginatorLimit;
-        const splittedArray = [];
-
-        for (let i = 0; i < auxArray.length; i += fragmentSize) {
-          splittedArray.push(auxArray.slice(i, i + fragmentSize));
-        }
-
-        setProducts(splittedArray);
+        setProducts(response.data);
+        setProductsPage(
+          products.slice(currentPage, currentPage + productPaginatorLimit)
+        );
         setProductCounter(Object.keys(response.data).length);
         setIsLoading(false);
       }
     }
 
     loadProducts();
-  }, [refresh]);
+  }, [refresh, currentPage, productCounter]);
 
   const footer = function footer() {
     return (
@@ -46,12 +42,21 @@ const ProductList = () => {
           messageOne="refresh_now"
           messageTwo="refresh_now"
         ></ManualFetch>
-        <AddButton
-          text="Add button"
+        <ManualFetch
           onClickFunc={() => {
-            setCurrentPage(1);
+            setCurrentPage(currentPage - productPaginatorLimit);
           }}
-        />
+          messageOne="prev_page"
+          messageTwo="prev_page"
+        ></ManualFetch>
+        <ManualFetch
+          onClickFunc={() => {
+            setCurrentPage(currentPage + productPaginatorLimit);
+          }}
+          messageOne="next_page"
+          messageTwo="next_page"
+        ></ManualFetch>
+        <AddButton text="Add button" />
       </>
     );
   };
@@ -66,16 +71,9 @@ const ProductList = () => {
     );
   };
 
-  function getProductsByIndex() {
-    const productsChunk = products[currentPage];
-    const productsChunkArray = [];
-    productsChunk.forEach((p) => {
-      productsChunkArray.push(p);
-    });
-    productsChunkArray.map((p) => {
-      return <Card props={p}></Card>;
-    });
-  }
+  const getProductsPage = productsPage.map((product) => {
+    return <Card props={product}></Card>;
+  });
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -91,7 +89,7 @@ const ProductList = () => {
   } else {
     return (
       <>
-        <Columns>{getProductsByIndex}</Columns>
+        <Columns>{getProductsPage}</Columns>
         {footer()}
         {paginator()}
       </>
