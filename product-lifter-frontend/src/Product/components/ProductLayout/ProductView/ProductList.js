@@ -15,7 +15,8 @@ const ProductList = () => {
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const productPaginatorLimit = 4;
   const styleCols = 12;
 
@@ -25,27 +26,31 @@ const ProductList = () => {
       if (response.status === 200) {
         setProducts(response.data);
         setProductsPage(
-          products.slice(currentPage, currentPage + productPaginatorLimit)
+          products.slice(currentOffset, currentOffset + productPaginatorLimit)
         );
         setProductCounter(Object.keys(response.data).length);
         setIsLoading(false);
       }
     }
 
-    if (currentPage > 0) {
+    if (currentOffset > 0) {
       setCanGoBack(false);
     } else {
       setCanGoBack(true);
     }
 
-    if (currentPage + productPaginatorLimit + 1 > productCounter) {
+    if (currentOffset + productPaginatorLimit + 1 > productCounter) {
       setCanGoNext(true);
     } else {
       setCanGoNext(false);
     }
 
     loadProducts();
-  }, [refresh, currentPage, productCounter]);
+  }, [refresh, currentOffset, productCounter]);
+
+  useEffect(() => {
+    setCurrentOffset(productPaginatorLimit * (currentPage - 1));
+  }, [currentPage]);
 
   const footer = function footer() {
     return (
@@ -70,11 +75,16 @@ const ProductList = () => {
           <Paginator
             disablePrev={canGoBack}
             prevFunction={() => {
-              setCurrentPage(currentPage - productPaginatorLimit);
+              setCurrentOffset(currentOffset - productPaginatorLimit);
+              setCurrentPage(currentPage - 1);
             }}
             disableNext={canGoNext}
             nextFunction={() => {
-              setCurrentPage(currentPage + productPaginatorLimit);
+              setCurrentOffset(currentOffset + productPaginatorLimit);
+              setCurrentPage(currentPage + 1);
+            }}
+            goToPageFunction={(event) => {
+              setCurrentPage(parseInt(event.target.id));
             }}
             pages={pages}
           ></Paginator>
