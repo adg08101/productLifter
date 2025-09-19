@@ -16,7 +16,8 @@ const ProductList = () => {
   const [canGoNext, setCanGoNext] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const productPaginatorLimit = 6;
+  const productPaginatorLimit = 4;
+  const styleCols = 12;
 
   useEffect(() => {
     async function loadProducts() {
@@ -62,6 +63,7 @@ const ProductList = () => {
   };
 
   const paginator = function paginator() {
+    const pages = productCounter / productPaginatorLimit;
     return (
       <>
         <Section className="is-flex columns is-centered">
@@ -74,8 +76,7 @@ const ProductList = () => {
             nextFunction={() => {
               setCurrentPage(currentPage + productPaginatorLimit);
             }}
-            current={1}
-            total={productCounter}
+            pages={pages}
           ></Paginator>
         </Section>
       </>
@@ -83,7 +84,9 @@ const ProductList = () => {
   };
 
   const getProductsPage = productsPage.map((product) => {
-    return <Card props={product}></Card>;
+    return (
+      <Card size={styleCols / productPaginatorLimit} props={product}></Card>
+    );
   });
 
   if (isLoading) {

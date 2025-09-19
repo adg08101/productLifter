@@ -1,9 +1,9 @@
 import React from "react";
 import { Columns } from "react-bulma-components";
 
-const Card = ({ props }) => {
+const Card = ({ props }, size) => {
   return (
-    <Columns.Column size={2}>
+    <Columns.Column size={size}>
       <div className="card">
         <div className="card-image">
           <figure className="image is-4by3">
