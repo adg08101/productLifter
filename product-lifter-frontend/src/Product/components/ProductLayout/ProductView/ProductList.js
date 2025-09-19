@@ -9,32 +9,42 @@ import { getProducts } from "../../../../libs/axios";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [productsPage, setProductsPage] = useState([]);
   const [productCounter, setProductCounter] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoNext, setCanGoNext] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-  const productPaginatorLimit = 4;
+  const productPaginatorLimit = 6;
 
   useEffect(() => {
     async function loadProducts() {
       const response = await getProducts();
       if (response.status === 200) {
-        const auxArray = response.data;
-        const fragmentSize = productPaginatorLimit;
-        const splittedArray = [];
-
-        for (let i = 0; i < auxArray.length; i += fragmentSize) {
-          splittedArray.push(auxArray.slice(i, i + fragmentSize));
-        }
-
-        setProducts(splittedArray);
+        setProducts(response.data);
+        setProductsPage(
+          products.slice(currentPage, currentPage + productPaginatorLimit)
+        );
         setProductCounter(Object.keys(response.data).length);
         setIsLoading(false);
       }
     }
 
+    if (currentPage > 0) {
+      setCanGoBack(false);
+    } else {
+      setCanGoBack(true);
+    }
+
+    if (currentPage + productPaginatorLimit + 1 > productCounter) {
+      setCanGoNext(true);
+    } else {
+      setCanGoNext(false);
+    }
+
     loadProducts();
-  }, [refresh]);
+  }, [refresh, currentPage, productCounter]);
 
   const footer = function footer() {
     return (
@@ -46,12 +56,7 @@ const ProductList = () => {
           messageOne="refresh_now"
           messageTwo="refresh_now"
         ></ManualFetch>
-        <AddButton
-          text="Add button"
-          onClickFunc={() => {
-            setCurrentPage(1);
-          }}
-        />
+        <AddButton text="Add button" />
       </>
     );
   };
@@ -59,23 +64,27 @@ const ProductList = () => {
   const paginator = function paginator() {
     return (
       <>
-        <Section>
-          <Paginator current={1} total={productCounter}></Paginator>
+        <Section className="is-flex columns is-centered">
+          <Paginator
+            disablePrev={canGoBack}
+            prevFunction={() => {
+              setCurrentPage(currentPage - productPaginatorLimit);
+            }}
+            disableNext={canGoNext}
+            nextFunction={() => {
+              setCurrentPage(currentPage + productPaginatorLimit);
+            }}
+            current={1}
+            total={productCounter}
+          ></Paginator>
         </Section>
       </>
     );
   };
 
-  function getProductsByIndex() {
-    const productsChunk = products[currentPage];
-    const productsChunkArray = [];
-    productsChunk.forEach((p) => {
-      productsChunkArray.push(p);
-    });
-    productsChunkArray.map((p) => {
-      return <Card props={p}></Card>;
-    });
-  }
+  const getProductsPage = productsPage.map((product) => {
+    return <Card props={product}></Card>;
+  });
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -91,7 +100,7 @@ const ProductList = () => {
   } else {
     return (
       <>
-        <Columns>{getProductsByIndex}</Columns>
+        <Columns>{getProductsPage}</Columns>
         {footer()}
         {paginator()}
       </>

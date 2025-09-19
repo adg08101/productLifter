@@ -5,7 +5,6 @@ const productRoutes = require("./routes/product");
 const path = require("node:path");
 
 const corsOption = {
-  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
