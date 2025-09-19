@@ -1,22 +1,40 @@
 import React from "react";
 
-const Paginator = () => {
+const Paginator = ({
+  disablePrev,
+  disableNext,
+  nextFunction,
+  prevFunction,
+}) => {
   return (
     <nav className="pagination" role="navigation" aria-label="pagination">
-      <a href="#" className="pagination-previous">
-        Previous
-      </a>
-      <a href="#" className="pagination-next">
-        Next page
-      </a>
+      {!disablePrev ? (
+        <div className="is-pulled-left">
+          <a
+            disabled={disablePrev}
+            href="#"
+            className="pagination-previous"
+            onClick={prevFunction}
+          >
+            Previous
+          </a>
+        </div>
+      ) : null}
+      {!disableNext ? (
+        <a
+          disabled={disableNext}
+          href="#"
+          className="pagination-next"
+          onClick={nextFunction}
+        >
+          Next page
+        </a>
+      ) : null}
       <ul className="pagination-list">
         <li>
           <a href="#" className="pagination-link" aria-label="Goto page 1">
             1
           </a>
-        </li>
-        <li>
-          <span className="pagination-ellipsis">&hellip;</span>
         </li>
         <li>
           <a href="#" className="pagination-link" aria-label="Goto page 45">
@@ -36,9 +54,6 @@ const Paginator = () => {
           <a href="#" className="pagination-link" aria-label="Goto page 47">
             47
           </a>
-        </li>
-        <li>
-          <span className="pagination-ellipsis">&hellip;</span>
         </li>
         <li>
           <a href="#" className="pagination-link" aria-label="Goto page 86">
