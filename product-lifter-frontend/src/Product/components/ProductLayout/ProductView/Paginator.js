@@ -5,62 +5,47 @@ const Paginator = ({
   disableNext,
   nextFunction,
   prevFunction,
+  pages,
 }) => {
+  const pagesArray = [];
+  for (let i = 0; i < pages; i++) {
+    pagesArray.push(i + 1);
+  }
+
+  const iterate = pagesArray.map((p) => {
+    return (
+      <li>
+        <a href="#" className="pagination-link">
+          {p}
+        </a>
+      </li>
+    );
+  });
+
   return (
     <nav className="pagination" role="navigation" aria-label="pagination">
       {!disablePrev ? (
         <div className="is-pulled-left">
           <a
             disabled={disablePrev}
-            href="#"
             className="pagination-previous"
             onClick={prevFunction}
           >
-            Previous
+            Back
           </a>
         </div>
       ) : null}
       {!disableNext ? (
         <a
           disabled={disableNext}
-          href="#"
           className="pagination-next"
           onClick={nextFunction}
         >
-          Next page
+          Next
         </a>
       ) : null}
-      <ul className="pagination-list">
-        <li>
-          <a href="#" className="pagination-link" aria-label="Goto page 1">
-            1
-          </a>
-        </li>
-        <li>
-          <a href="#" className="pagination-link" aria-label="Goto page 45">
-            45
-          </a>
-        </li>
-        <li>
-          <a
-            className="pagination-link is-current"
-            aria-label="Page 46"
-            aria-current="page"
-          >
-            46
-          </a>
-        </li>
-        <li>
-          <a href="#" className="pagination-link" aria-label="Goto page 47">
-            47
-          </a>
-        </li>
-        <li>
-          <a href="#" className="pagination-link" aria-label="Goto page 86">
-            86
-          </a>
-        </li>
-      </ul>
+
+      <ul className="pagination-list">{iterate}</ul>
     </nav>
   );
 };
