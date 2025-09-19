@@ -27,21 +27,13 @@ const Paginator = ({
     <nav className="pagination" role="navigation" aria-label="pagination">
       {!disablePrev ? (
         <div className="is-pulled-left">
-          <a
-            disabled={disablePrev}
-            className="pagination-previous"
-            onClick={prevFunction}
-          >
+          <a className="pagination-previous" onClick={prevFunction}>
             Back
           </a>
         </div>
       ) : null}
       {!disableNext ? (
-        <a
-          disabled={disableNext}
-          className="pagination-next"
-          onClick={nextFunction}
-        >
+        <a className="pagination-next" onClick={nextFunction}>
           Next
         </a>
       ) : null}

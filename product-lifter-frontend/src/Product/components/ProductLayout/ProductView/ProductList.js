@@ -17,7 +17,7 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const productPaginatorLimit = 4;
+  const [productPaginatorLimit, setProductPaginatorLimit] = useState(5);
   const styleCols = 12;
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const ProductList = () => {
     }
 
     loadProducts();
-  }, [refresh, currentOffset, productCounter]);
+  }, [refresh, currentOffset, productCounter, productPaginatorLimit]);
 
   useEffect(() => {
     setCurrentOffset(productPaginatorLimit * (currentPage - 1));
