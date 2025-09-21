@@ -1,29 +1,15 @@
-import ManualFetch from "../ManualFetch";
+import CustomButton from "../CustomButton";
 import AddButton from "../../AddButton";
 
-const ProductListFooter = function footer({
-  onClickFunc,
-  seeLessFunc,
-  seeMoreFunc,
-}) {
+const ProductListFooter = function footer({ onClickFunc, addProductFunction }) {
   return (
     <>
-      <ManualFetch
+      <CustomButton
         onClickFunc={onClickFunc}
         messageOne="refresh_now"
         messageTwo="refresh_now"
-      ></ManualFetch>
-      <ManualFetch
-        onClickFunc={seeLessFunc}
-        messageOne="-"
-        messageTwo="-"
-      ></ManualFetch>
-      <ManualFetch
-        onClickFunc={seeMoreFunc}
-        messageOne="+"
-        messageTwo="+"
-      ></ManualFetch>
-      <AddButton text="Add button" />
+      ></CustomButton>
+      <AddButton text="Add button" onClickFunc={addProductFunction} />
     </>
   );
 };
