@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Button } from "react-bulma-components";
 
-const ManualFetch = ({ onClickFunc, messageOne, messageTwo }) => {
+const CustomButton = ({ onClickFunc, messageOne, messageTwo }) => {
   const [enabled, setIsEnabled] = useState(true);
 
   return (
@@ -20,4 +20,4 @@ const ManualFetch = ({ onClickFunc, messageOne, messageTwo }) => {
   );
 };
 
-export default ManualFetch;
+export default CustomButton;

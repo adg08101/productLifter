@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
-import ManualFetch from "./ManualFetch";
-import AddButton from "../AddButton";
+import CustomButton from "./CustomButton";
 import Card from "./Card";
 import { Columns, Pagination, Section, Box } from "react-bulma-components";
 import Paginator from "../../Paginator";
 import { getProducts } from "../../../../libs/axios";
 import ProductListFooter from "./components/ProductListFooter";
+import ProductModal from "./components/ProductModal";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -14,6 +14,7 @@ const ProductList = () => {
   const [productCounter, setProductCounter] = useState(0);
   const [refresh, setRefresh] = useState(false);
   const [canGoBack, setCanGoBack] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [canGoNext, setCanGoNext] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -56,7 +57,11 @@ const ProductList = () => {
 
   const getProductsPage = productsPage.map((product) => {
     return (
-      <Card size={styleCols / productPaginatorLimit} props={product}></Card>
+      <Card
+        key={product.sku}
+        size={styleCols / productPaginatorLimit}
+        props={product}
+      ></Card>
     );
   });
 
@@ -71,12 +76,7 @@ const ProductList = () => {
         {
           <ProductListFooter
             onClickFunc={() => setRefresh(!refresh)}
-            seeLessFunc={() =>
-              setProductPaginatorLimit(productPaginatorLimit - 1)
-            }
-            seeMoreFunc={() =>
-              setProductPaginatorLimit(productPaginatorLimit + 1)
-            }
+            addProductFunction={() => setShowModal(true)}
           ></ProductListFooter>
         }
       </>
@@ -88,9 +88,30 @@ const ProductList = () => {
         {
           <ProductListFooter
             onClickFunc={() => setRefresh(!refresh)}
+            addProductFunction={() => setShowModal(true)}
           ></ProductListFooter>
         }
         <Section className="is-flex columns is-centered">
+          <Section>
+            {productPaginatorLimit > 1 ? (
+              <CustomButton
+                onClickFunc={() => {
+                  setProductPaginatorLimit(productPaginatorLimit - 1);
+                }}
+                messageOne="-"
+                messageTwo="-"
+              ></CustomButton>
+            ) : null}
+            {productPaginatorLimit < 6 ? (
+              <CustomButton
+                onClickFunc={() => {
+                  setProductPaginatorLimit(productPaginatorLimit + 1);
+                }}
+                messageOne="+"
+                messageTwo="+"
+              ></CustomButton>
+            ) : null}
+          </Section>
           <Paginator
             disablePrev={canGoBack}
             prevFunction={() => {
@@ -108,6 +129,11 @@ const ProductList = () => {
             pages={pages}
           ></Paginator>
         </Section>
+
+        <ProductModal
+          closeFunction={() => setShowModal(false)}
+          show={showModal}
+        ></ProductModal>
       </>
     );
   }

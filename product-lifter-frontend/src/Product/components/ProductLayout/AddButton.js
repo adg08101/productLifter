@@ -1,10 +1,12 @@
 import React from "react";
 import { Button } from "react-bulma-components";
 
-const AddButton = ({ text }) => {
+const AddButton = ({ text, onClickFunc }) => {
   return (
     <div className="is-pulled-right">
-      <Button color="info">{text}</Button>
+      <Button color="info" onClick={onClickFunc}>
+        {text}
+      </Button>
     </div>
   );
 };

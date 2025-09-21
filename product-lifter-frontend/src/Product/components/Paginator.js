@@ -16,7 +16,12 @@ const Paginator = ({
   const iterate = pagesArray.map((p) => {
     return (
       <li>
-        <a id={p} onClick={goToPageFunction} className="pagination-link">
+        <a
+          key={p}
+          id={p}
+          onClick={goToPageFunction}
+          className="pagination-link"
+        >
           {p}
         </a>
       </li>

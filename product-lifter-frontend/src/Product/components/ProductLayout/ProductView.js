@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProductList from "./ProductView/ProductList";
-import ManualFetch from "./ProductView/ManualFetch";
+import CustomButton from "./ProductView/CustomButton";
 
 const ProductView = () => {
   var showManualFetch = false;
@@ -14,11 +14,11 @@ const ProductView = () => {
     <>
       <ProductList></ProductList>
       {showManualFetch ? (
-        <ManualFetch
+        <CustomButton
           onClickFunc={onClickFunc}
           messageOne="fetch_now"
           messageTwo="done"
-        ></ManualFetch>
+        ></CustomButton>
       ) : null}
     </>
   );
