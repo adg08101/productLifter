@@ -4,8 +4,9 @@ import ManualFetch from "./ManualFetch";
 import AddButton from "../AddButton";
 import Card from "./Card";
 import { Columns, Pagination, Section, Box } from "react-bulma-components";
-import Paginator from "./Paginator";
+import Paginator from "../../Paginator";
 import { getProducts } from "../../../../libs/axios";
+import ProductListFooter from "./components/ProductListFooter";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -17,8 +18,9 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPaginatorLimit, setProductPaginatorLimit] = useState(5);
+  const [productPaginatorLimit, setProductPaginatorLimit] = useState(4);
   const styleCols = 12;
+  const pages = productCounter / productPaginatorLimit;
 
   useEffect(() => {
     async function loadProducts() {
@@ -52,25 +54,42 @@ const ProductList = () => {
     setCurrentOffset(productPaginatorLimit * (currentPage - 1));
   }, [currentPage]);
 
-  const footer = function footer() {
+  const getProductsPage = productsPage.map((product) => {
+    return (
+      <Card size={styleCols / productPaginatorLimit} props={product}></Card>
+    );
+  });
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
+  if (products.length === 0) {
     return (
       <>
-        <ManualFetch
-          onClickFunc={() => {
-            setRefresh(!refresh);
-          }}
-          messageOne="refresh_now"
-          messageTwo="refresh_now"
-        ></ManualFetch>
-        <AddButton text="Add button" />
+        <Box>No products are found try adding new ones</Box>
+        {
+          <ProductListFooter
+            onClickFunc={() => setRefresh(!refresh)}
+            seeLessFunc={() =>
+              setProductPaginatorLimit(productPaginatorLimit - 1)
+            }
+            seeMoreFunc={() =>
+              setProductPaginatorLimit(productPaginatorLimit + 1)
+            }
+          ></ProductListFooter>
+        }
       </>
     );
-  };
-
-  const paginator = function paginator() {
-    const pages = productCounter / productPaginatorLimit;
+  } else {
     return (
       <>
+        <Columns>{getProductsPage}</Columns>
+        {
+          <ProductListFooter
+            onClickFunc={() => setRefresh(!refresh)}
+          ></ProductListFooter>
+        }
         <Section className="is-flex columns is-centered">
           <Paginator
             disablePrev={canGoBack}
@@ -89,33 +108,6 @@ const ProductList = () => {
             pages={pages}
           ></Paginator>
         </Section>
-      </>
-    );
-  };
-
-  const getProductsPage = productsPage.map((product) => {
-    return (
-      <Card size={styleCols / productPaginatorLimit} props={product}></Card>
-    );
-  });
-
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
-
-  if (products.length === 0) {
-    return (
-      <>
-        <Box>No products are found try adding new ones</Box>
-        {footer()}
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Columns>{getProductsPage}</Columns>
-        {footer()}
-        {paginator()}
       </>
     );
   }
