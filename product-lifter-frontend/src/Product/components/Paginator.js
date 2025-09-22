@@ -7,6 +7,7 @@ const Paginator = ({
   prevFunction,
   pages,
   goToPageFunction,
+  currentPage,
 }) => {
   const pagesArray = [];
   for (let i = 0; i < pages; i++) {
@@ -14,14 +15,11 @@ const Paginator = ({
   }
 
   const iterate = pagesArray.map((p) => {
+    const className =
+      p == currentPage ? "pagination-link is-current" : "pagination-link";
     return (
       <li>
-        <a
-          key={p}
-          id={p}
-          onClick={goToPageFunction}
-          className="pagination-link"
-        >
+        <a key={p} id={p} onClick={goToPageFunction} className={className}>
           {p}
         </a>
       </li>
@@ -32,13 +30,13 @@ const Paginator = ({
     <nav className="pagination" role="navigation" aria-label="pagination">
       {!disablePrev ? (
         <div className="is-pulled-left">
-          <a className="pagination-previous" onClick={prevFunction}>
+          <a key="prev" className="pagination-previous" onClick={prevFunction}>
             Back
           </a>
         </div>
       ) : null}
       {!disableNext ? (
-        <a className="pagination-next" onClick={nextFunction}>
+        <a key="next" className="pagination-next" onClick={nextFunction}>
           Next
         </a>
       ) : null}

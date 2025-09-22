@@ -127,6 +127,7 @@ const ProductList = () => {
               setCurrentPage(parseInt(event.target.id));
             }}
             pages={pages}
+            currentPage={currentPage}
           ></Paginator>
         </Section>
 
