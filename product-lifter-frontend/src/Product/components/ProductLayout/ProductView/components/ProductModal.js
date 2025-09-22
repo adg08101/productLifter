@@ -19,7 +19,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                 <Heading subtitle>Add new product</Heading>
               </Modal.Card.Header>
               <Modal.Card.Body>
-                <Form.Field>
+                <Form.Field kind="group">
                   <Form.Label>Upload product picture</Form.Label>
                   <Form.Control>
                     <div class="file has-name is-boxed">
@@ -37,6 +37,11 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                         </span>
                       </label>
                     </div>
+                  </Form.Control>
+                  <Form.Control>
+                    <label class="checkbox">
+                      <input type="checkbox" /> Active
+                    </label>
                   </Form.Control>
                 </Form.Field>
                 <Form.Field>
@@ -74,9 +79,9 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                     </div>
                   </Form.Control>
                 </Form.Field>
-                <Form.Field>
+                <Form.Field kind="group" className="is-pulled-left">
                   <Form.Label>Write product quantity</Form.Label>
-                  <Form.Control>
+                  <Form.Control style={{ width: 20 + "%" }}>
                     <input
                       class="input"
                       type="number"
@@ -84,10 +89,9 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                       min={0}
                     />
                   </Form.Control>
-                </Form.Field>
-                <Form.Field>
+
                   <Form.Label>Write product price</Form.Label>
-                  <Form.Control>
+                  <Form.Control style={{ width: 20 + "%" }}>
                     <input
                       class="input"
                       type="number"
@@ -134,14 +138,6 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                         <option>+ 1000</option>
                       </select>
                     </div>
-                  </Form.Control>
-                </Form.Field>
-                <Form.Field>
-                  <Form.Label>Active</Form.Label>
-                  <Form.Control>
-                    <label class="checkbox">
-                      <input type="checkbox" /> Active
-                    </label>
                   </Form.Control>
                 </Form.Field>
               </Modal.Card.Body>
