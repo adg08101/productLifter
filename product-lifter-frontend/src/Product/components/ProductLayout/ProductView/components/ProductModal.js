@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import { Button, Modal, Form, Heading } from "react-bulma-components";
 
 const ProductModal = function ProductModal({ show, closeFunction }) {
-  const [username, setUsername] = useState("bulma");
-  const [email, setEmail] = useState("hello@");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [tocAgreed, setTocAgreed] = useState(false);
-  const [questionValue, setQuestionValue] = useState("");
-
   return (
     <>
       <Modal show={show}>
@@ -22,16 +15,16 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                 <Form.Field kind="group">
                   <Form.Label>Upload product picture</Form.Label>
                   <Form.Control>
-                    <div class="file has-name is-boxed">
-                      <label class="file-label">
-                        <input class="file-input" type="file" name="resume" />
-                        <span class="file-cta">
-                          <span class="file-icon">
-                            <i class="fas fa-upload"></i>
+                    <div className="file has-name is-boxed">
+                      <label className="file-label">
+                        <input className="file-input" type="file" name="resume" />
+                        <span className="file-cta">
+                          <span className="file-icon">
+                            <i className="fas fa-upload"></i>
                           </span>
-                          <span class="file-label"> Choose a file… </span>
+                          <span className="file-label"> Choose a file… </span>
                         </span>
-                        <span class="file-name">
+                        <span className="file-name">
                           {" "}
                           Screen Shot 2017-07-29 at 15.54.25.png{" "}
                         </span>
@@ -39,7 +32,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                     </div>
                   </Form.Control>
                   <Form.Control>
-                    <label class="checkbox">
+                    <label className="checkbox">
                       <input type="checkbox" /> Active
                     </label>
                   </Form.Control>
@@ -48,7 +41,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Write product description</Form.Label>
                   <Form.Control>
                     <textarea
-                      class="textarea"
+                      className="textarea"
                       placeholder="e.g. Hello world"
                     ></textarea>
                   </Form.Control>
@@ -56,13 +49,13 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                 <Form.Field>
                   <Form.Label>Write product name</Form.Label>
                   <Form.Control>
-                    <input class="input" type="text" placeholder="Text input" />
+                    <input className="input" type="text" placeholder="Text input" />
                   </Form.Control>
                 </Form.Field>
                 <Form.Field kind="group">
                   <Form.Label>Select product category</Form.Label>
                   <Form.Control>
-                    <div class="select">
+                    <div className="select">
                       <select>
                         <option>Audio</option>
                         <option>Video</option>
@@ -71,7 +64,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   </Form.Control>
                   <Form.Label>Select product brand</Form.Label>
                   <Form.Control>
-                    <div class="select">
+                    <div className="select">
                       <select>
                         <option>JBL</option>
                         <option>JVC</option>
@@ -79,11 +72,11 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                     </div>
                   </Form.Control>
                 </Form.Field>
-                <Form.Field kind="group" className="is-pulled-left">
+                <Form.Field kind="group" classNameName="is-pulled-left">
                   <Form.Label>Write product quantity</Form.Label>
                   <Form.Control style={{ width: 20 + "%" }}>
                     <input
-                      class="input"
+                      className="input"
                       type="number"
                       placeholder="Text input"
                       min={0}
@@ -93,7 +86,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Write product price</Form.Label>
                   <Form.Control style={{ width: 20 + "%" }}>
                     <input
-                      class="input"
+                      className="input"
                       type="number"
                       placeholder="Text input"
                       min={0}
@@ -104,7 +97,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Write product price/cents</Form.Label>
                   <Form.Control>
                     <input
-                      class="input"
+                      className="input"
                       type="range"
                       min={0}
                       max={100}
@@ -116,7 +109,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                 <Form.Field kind="group">
                   <Form.Label>Write product ratings rate/count</Form.Label>
                   <Form.Control>
-                    <div class="select">
+                    <div className="select">
                       <select>
                         <option>0</option>
                         <option>1</option>
@@ -129,7 +122,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   </Form.Control>
 
                   <Form.Control>
-                    <div class="select">
+                    <div className="select">
                       <select>
                         <option>- 100</option>
                         <option>100 - 200</option>
