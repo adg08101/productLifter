@@ -2,6 +2,27 @@ import React, { useState } from "react";
 import { Button, Modal, Form, Heading } from "react-bulma-components";
 
 const ProductModal = function ProductModal({ show, closeFunction }) {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    stock: "",
+    images: "",
+    image: "",
+    brand: "",
+    sku: "",
+    ratings: "",
+    isActive: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log("changed or clicked", name, value);
+
+    setFormValues({ ...formValues, [name]: value });
+  };
+
   return (
     <>
       <Modal show={show}>
@@ -17,7 +38,11 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Control>
                     <div className="file has-name is-boxed">
                       <label className="file-label">
-                        <input className="file-input" type="file" name="resume" />
+                        <input
+                          className="file-input"
+                          type="file"
+                          name="resume"
+                        />
                         <span className="file-cta">
                           <span className="file-icon">
                             <i className="fas fa-upload"></i>
@@ -42,14 +67,24 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Control>
                     <textarea
                       className="textarea"
-                      placeholder="e.g. Hello world"
-                    ></textarea>
+                      placeholder="Product description"
+                      name="description"
+                      value={formValues.description}
+                      onChange={handleChange}
+                    />
                   </Form.Control>
                 </Form.Field>
                 <Form.Field>
                   <Form.Label>Write product name</Form.Label>
                   <Form.Control>
-                    <input className="input" type="text" placeholder="Text input" />
+                    <input
+                      type="text"
+                      className="input"
+                      placeholder="Product name"
+                      name="name"
+                      value={formValues.name}
+                      onChange={handleChange}
+                    />
                   </Form.Control>
                 </Form.Field>
                 <Form.Field kind="group">
@@ -72,7 +107,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                     </div>
                   </Form.Control>
                 </Form.Field>
-                <Form.Field kind="group" classNameName="is-pulled-left">
+                <Form.Field kind="group" className="is-pulled-left">
                   <Form.Label>Write product quantity</Form.Label>
                   <Form.Control style={{ width: 20 + "%" }}>
                     <input

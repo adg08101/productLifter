@@ -1,7 +1,7 @@
 import React from "react";
 import { Columns } from "react-bulma-components";
 
-const Card = ({ props }, size) => {
+const Card = ({ props, size }) => {
   return (
     <Columns.Column size={size}>
       <div className="card">

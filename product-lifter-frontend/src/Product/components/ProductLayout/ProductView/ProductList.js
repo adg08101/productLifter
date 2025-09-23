@@ -101,7 +101,7 @@ const ProductList = () => {
                 messageOne="-"
                 messageTwo="-"
               ></CustomButton>
-            ) : null}
+            ) : null}{" "}
             {productPaginatorLimit < 6 ? (
               <CustomButton
                 onClickFunc={() => {
