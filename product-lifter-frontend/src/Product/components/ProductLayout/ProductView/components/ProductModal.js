@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal, Form, Heading, Box } from "react-bulma-components";
 
-const ProductModal = function ProductModal({ show, closeFunction }) {
+const ProductModal = function ProductModal({
+  show,
+  closeFunction,
+  submitFunction,
+}) {
   const [seeRatings, setSeeRatings] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -27,8 +31,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formValues);
+    submitFunction(formValues);
   };
 
   return (

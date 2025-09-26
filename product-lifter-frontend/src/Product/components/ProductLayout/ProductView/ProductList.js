@@ -4,7 +4,7 @@ import CustomButton from "./CustomButton";
 import Card from "./Card";
 import { Columns, Pagination, Section, Box } from "react-bulma-components";
 import Paginator from "../../Paginator";
-import { getProducts } from "../../../../libs/axios";
+import { getProducts, saveProduct } from "../../../../libs/axios";
 import ProductListFooter from "./components/ProductListFooter";
 import ProductModal from "./components/ProductModal";
 
@@ -132,6 +132,7 @@ const ProductList = () => {
         </Section>
 
         <ProductModal
+          submitFunction={saveProduct}
           closeFunction={() => setShowModal(false)}
           show={showModal}
         ></ProductModal>
