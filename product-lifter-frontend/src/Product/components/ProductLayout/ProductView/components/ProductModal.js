@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Heading } from "react-bulma-components";
+import { Button, Modal, Form, Heading, Box } from "react-bulma-components";
 
 const ProductModal = function ProductModal({ show, closeFunction }) {
+  const [seeRatings, setSeeRatings] = useState(false);
+
   const [formValues, setFormValues] = useState({
     name: "",
     description: "",
@@ -24,6 +26,11 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
       : setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formValues);
+  };
+
   return (
     <>
       <Modal show={show}>
@@ -42,7 +49,10 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                         <input
                           className="file-input"
                           type="file"
-                          name="resume"
+                          name="image"
+                          value={formValues.image}
+                          onChange={handleChange}
+                          multiple
                         />
                         <span className="file-cta">
                           <span className="file-icon">
@@ -50,10 +60,7 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                           </span>
                           <span className="file-label"> Choose a file… </span>
                         </span>
-                        <span className="file-name">
-                          {" "}
-                          Screen Shot 2017-07-29 at 15.54.25.png{" "}
-                        </span>
+                        <span className="file-name">{formValues.image}</span>
                       </label>
                     </div>
                   </Form.Control>
@@ -163,39 +170,52 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                     />
                   </Form.Control>
                 </Form.Field>
+                <Box>
+                  <Form.Label
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSeeRatings(!seeRatings)}
+                  >
+                    Product ratings
+                  </Form.Label>
+                  {seeRatings ? (
+                    <Form.Field kind="group">
+                      <Form.Label>Write product ratings rate/count</Form.Label>
+                      <Form.Control>
+                        <div className="select">
+                          <select>
+                            <option></option>
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                      </Form.Control>
 
-                <Form.Field kind="group">
-                  <Form.Label>Write product ratings rate/count</Form.Label>
-                  <Form.Control>
-                    <div className="select">
-                      <select>
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                      </select>
-                    </div>
-                  </Form.Control>
-
-                  <Form.Control>
-                    <div className="select">
-                      <select>
-                        <option>- 100</option>
-                        <option>100 - 200</option>
-                        <option>200 - 500</option>
-                        <option>500 - 1000</option>
-                        <option>+ 1000</option>
-                      </select>
-                    </div>
-                  </Form.Control>
-                </Form.Field>
+                      <Form.Control>
+                        <div className="select">
+                          <select>
+                            <option></option>
+                            <option>- 100</option>
+                            <option>100 - 200</option>
+                            <option>200 - 500</option>
+                            <option>500 - 1000</option>
+                            <option>+ 1000</option>
+                          </select>
+                        </div>
+                      </Form.Control>
+                    </Form.Field>
+                  ) : null}
+                </Box>
               </Modal.Card.Body>
               <Modal.Card.Footer>
                 <Form.Field kind="group">
                   <Form.Control>
-                    <Button color="link">Submit</Button>
+                    <Button type="submit" onClick={handleSubmit} color="link">
+                      Submit
+                    </Button>
                   </Form.Control>
                   <Form.Control>
                     <Button
