@@ -5,22 +5,23 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
   const [formValues, setFormValues] = useState({
     name: "",
     description: "",
-    price: "",
+    price: 0,
     category: "",
-    stock: "",
+    stock: 0,
     images: "",
     image: "",
     brand: "",
     sku: "",
-    ratings: "",
-    isActive: "",
+    ratings: {},
+    isActive: false,
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    console.log("changed or clicked", name, value);
+    const { type, name, value, checked } = event.target;
 
-    setFormValues({ ...formValues, [name]: value });
+    type === "checkbox"
+      ? setFormValues({ ...formValues, [name]: checked })
+      : setFormValues({ ...formValues, [name]: value });
   };
 
   return (
@@ -58,7 +59,13 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   </Form.Control>
                   <Form.Control>
                     <label className="checkbox">
-                      <input type="checkbox" /> Active
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        checked={formValues.isActive}
+                        onChange={handleChange}
+                      />{" "}
+                      Active
                     </label>
                   </Form.Control>
                 </Form.Field>
@@ -91,7 +98,12 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Select product category</Form.Label>
                   <Form.Control>
                     <div className="select">
-                      <select>
+                      <select
+                        name="category"
+                        value={formValues.category}
+                        onChange={handleChange}
+                      >
+                        <option></option>
                         <option>Audio</option>
                         <option>Video</option>
                       </select>
@@ -100,7 +112,12 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Select product brand</Form.Label>
                   <Form.Control>
                     <div className="select">
-                      <select>
+                      <select
+                        name="brand"
+                        value={formValues.brand}
+                        onChange={handleChange}
+                      >
+                        <option></option>
                         <option>JBL</option>
                         <option>JVC</option>
                       </select>
@@ -108,9 +125,12 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   </Form.Control>
                 </Form.Field>
                 <Form.Field kind="group" className="is-pulled-left">
-                  <Form.Label>Write product quantity</Form.Label>
+                  <Form.Label>Write product stock</Form.Label>
                   <Form.Control style={{ width: 20 + "%" }}>
                     <input
+                      name="stock"
+                      value={formValues.stock}
+                      onChange={handleChange}
                       className="input"
                       type="number"
                       placeholder="Text input"
@@ -121,6 +141,9 @@ const ProductModal = function ProductModal({ show, closeFunction }) {
                   <Form.Label>Write product price</Form.Label>
                   <Form.Control style={{ width: 20 + "%" }}>
                     <input
+                      name="price"
+                      value={formValues.price}
+                      onChange={handleChange}
                       className="input"
                       type="number"
                       placeholder="Text input"
