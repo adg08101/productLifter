@@ -6,21 +6,24 @@ const ProductModal = function ProductModal({
   closeFunction,
   submitFunction,
 }) {
+  const defaultState = () => {
+    return {
+      name: "",
+      description: "",
+      price: 0,
+      category: "",
+      stock: 0,
+      images: "",
+      image: "",
+      brand: "",
+      sku: "",
+      ratings: {},
+      isActive: false,
+    };
+  };
   const [seeRatings, setSeeRatings] = useState(false);
 
-  const [formValues, setFormValues] = useState({
-    name: "",
-    description: "",
-    price: 0,
-    category: "",
-    stock: 0,
-    images: "",
-    image: "",
-    brand: "",
-    sku: "",
-    ratings: {},
-    isActive: false,
-  });
+  const [formValues, setFormValues] = useState(defaultState);
 
   const handleChange = (event) => {
     const { type, name, value, checked } = event.target;
@@ -227,6 +230,15 @@ const ProductModal = function ProductModal({
                       onClick={closeFunction}
                     >
                       Cancel
+                    </Button>
+                  </Form.Control>
+                  <Form.Control>
+                    <Button
+                      color="link"
+                      colorVariant="danger"
+                      onClick={() => setFormValues(defaultState)}
+                    >
+                      Reset
                     </Button>
                   </Form.Control>
                 </Form.Field>
