@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Modal, Form, Heading, Box } from "react-bulma-components";
 
 const ProductModal = function ProductModal({
@@ -6,25 +6,40 @@ const ProductModal = function ProductModal({
   closeFunction,
   submitFunction,
 }) {
-  const defaultState = () => {
+  const generateSku = () => {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+
+    for (let i = 0; i < 11; i++) {
+      const randomIndex = Math.floor(Math.random() * charactersLength);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  };
+
+  const inputFileRef = useRef();
+  const defaultState = (sku) => {
     return {
-      name: "",
-      description: "",
+      name: "El Clone",
+      description: "El Clone",
       price: 0,
       category: "",
       stock: 0,
       images: "",
-      image: "",
       brand: "",
       sku: "",
       ratings: {},
       isActive: false,
+      sku: sku,
     };
   };
+
   const [seeRatings, setSeeRatings] = useState(false);
-
-  const [formValues, setFormValues] = useState(defaultState);
-
+  const [seeSku, setSeeSku] = useState(false);
+  const [formValues, setFormValues] = useState(defaultState(generateSku()));
+  const [hasImage, setHasImage] = useState(false);
   const handleChange = (event) => {
     const { type, name, value, checked } = event.target;
 
@@ -34,7 +49,15 @@ const ProductModal = function ProductModal({
   };
 
   const handleSubmit = (event) => {
-    submitFunction(formValues);
+    event.preventDefault();
+    submitFunction({
+      ...formValues,
+      image: inputFileRef.current.files[0],
+    });
+  };
+
+  const checkHasImage = () => {
+    return inputFileRef.current.files.length > 0;
   };
 
   return (
@@ -47,6 +70,30 @@ const ProductModal = function ProductModal({
                 <Heading subtitle>Add new product</Heading>
               </Modal.Card.Header>
               <Modal.Card.Body>
+                <Box>
+                  <Form.Label
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSeeSku(!seeSku)}
+                  >
+                    Product id
+                  </Form.Label>
+                  {seeSku ? (
+                    <Form.Field>
+                      <Form.Label>Update random created id</Form.Label>
+
+                      <Form.Control>
+                        <input
+                          type="text"
+                          className="input"
+                          placeholder="Product sku"
+                          name="sku"
+                          value={formValues.sku}
+                          onChange={handleChange}
+                        />
+                      </Form.Control>
+                    </Form.Field>
+                  ) : null}
+                </Box>
                 <Form.Field kind="group">
                   <Form.Label>Upload product picture</Form.Label>
                   <Form.Control>
@@ -56,17 +103,22 @@ const ProductModal = function ProductModal({
                           className="file-input"
                           type="file"
                           name="image"
-                          value={formValues.image}
-                          onChange={handleChange}
-                          multiple
+                          ref={inputFileRef}
+                          onChange={() => setHasImage(checkHasImage)}
                         />
                         <span className="file-cta">
                           <span className="file-icon">
                             <i className="fas fa-upload"></i>
                           </span>
-                          <span className="file-label"> Choose a file… </span>
+                          <span className="file-label">
+                            {hasImage
+                              ? "File chosen, change?"
+                              : "Choose file..."}
+                          </span>
                         </span>
-                        <span className="file-name">{formValues.image}</span>
+                        <span className="file-name">
+                          {hasImage ? inputFileRef.current.files[0].name : null}
+                        </span>
                       </label>
                     </div>
                   </Form.Control>
@@ -236,7 +288,7 @@ const ProductModal = function ProductModal({
                     <Button
                       color="link"
                       colorVariant="danger"
-                      onClick={() => setFormValues(defaultState)}
+                      onClick={() => setFormValues(defaultState(generateSku()))}
                     >
                       Reset
                     </Button>
