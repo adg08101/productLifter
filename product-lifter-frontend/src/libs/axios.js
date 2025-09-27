@@ -9,7 +9,7 @@ export async function getProducts() {
 
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -36,6 +36,6 @@ export async function saveProduct(data) {
 
     return response;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
