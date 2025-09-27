@@ -108,17 +108,17 @@ const ProductModal = function ProductModal({
           <Modal.Content>
             <Modal.Card>
               <Modal.Card.Header>
-                <Heading subtitle>Add new product</Heading>
-              </Modal.Card.Header>
-              <Modal.Card.Body>
                 {response ? (
                   <Block>
                     <Notification color={responseStyle}>
                       {response ? responseMessage : null}
                     </Notification>
                   </Block>
-                ) : null}
-
+                ) : (
+                  <Heading subtitle>Add new product</Heading>
+                )}
+              </Modal.Card.Header>
+              <Modal.Card.Body>
                 <Box>
                   <Form.Label
                     style={{ cursor: "pointer" }}
