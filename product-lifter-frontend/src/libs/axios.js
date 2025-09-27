@@ -15,8 +15,6 @@ export async function getProducts() {
 
 export async function saveProduct(data) {
   try {
-    console.log(data);
-
     const formData = new FormData();
 
     formData.append("name", String(data.name).trim());
