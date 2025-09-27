@@ -19,7 +19,7 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPaginatorLimit, setProductPaginatorLimit] = useState(4);
+  const [productPaginatorLimit, setProductPaginatorLimit] = useState(6);
   const styleCols = 12;
   const pages = productCounter / productPaginatorLimit;
 
@@ -79,6 +79,11 @@ const ProductList = () => {
             addProductFunction={() => setShowModal(true)}
           ></ProductListFooter>
         }
+        <ProductModal
+          submitFunction={saveProduct}
+          closeFunction={() => setShowModal(false)}
+          show={showModal}
+        ></ProductModal>
       </>
     );
   } else {
@@ -130,7 +135,6 @@ const ProductList = () => {
             currentPage={currentPage}
           ></Paginator>
         </Section>
-
         <ProductModal
           submitFunction={saveProduct}
           closeFunction={() => setShowModal(false)}
