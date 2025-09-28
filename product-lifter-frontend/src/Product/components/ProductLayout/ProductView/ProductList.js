@@ -4,7 +4,11 @@ import CustomButton from "./CustomButton";
 import Card from "./Card";
 import { Columns, Pagination, Section, Box } from "react-bulma-components";
 import Paginator from "../../Paginator";
-import { getProducts, saveProduct } from "../../../../libs/axios";
+import {
+  getProducts,
+  saveProduct,
+  deleteProduct,
+} from "../../../../libs/axios";
 import ProductListFooter from "./components/ProductListFooter";
 import ProductModal from "./components/ProductModal";
 
@@ -61,6 +65,7 @@ const ProductList = () => {
         key={product.sku}
         size={styleCols / productPaginatorLimit}
         props={product}
+        deleteFunction={deleteProduct}
       ></Card>
     );
   });
