@@ -39,3 +39,17 @@ export async function saveProduct(data) {
     return e;
   }
 }
+
+export async function deleteProduct(data) {
+  try {
+    const response = await axios({
+      url: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_API_VERSION}/product`,
+      method: "DELETE",
+      data: data,
+    });
+
+    return response;
+  } catch (e) {
+    return e;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Columns, Box, Button } from "react-bulma-components";
 
-const Card = ({ props, size }) => {
+const Card = ({ props, size, deleteFunction }) => {
   const handleImage = () => {
     return props.image != "undefined"
       ? props.image
@@ -9,6 +9,17 @@ const Card = ({ props, size }) => {
   };
 
   const [seeOperations, setSeeOperations] = useState(false);
+
+  const handleOperation = async (event) => {
+    const operation = event.target.innerText;
+    const id = event.target.id;
+
+    const response = await deleteFunction({
+      id: id,
+    });
+
+    console.log(response);
+  };
 
   return (
     <Columns.Column size={size}>
@@ -54,8 +65,19 @@ const Card = ({ props, size }) => {
           </div>
           {seeOperations ? (
             <Box>
-              <Button colorVariant="light">Update</Button>
-              <Button className="is-pulled-right" colorVariant="danger">
+              <Button
+                colorVariant="light"
+                onClick={handleOperation}
+                id={props._id}
+              >
+                Update
+              </Button>
+              <Button
+                className="is-pulled-right"
+                colorVariant="danger"
+                onClick={handleOperation}
+                id={props._id}
+              >
                 Delete
               </Button>
             </Box>

@@ -34,6 +34,15 @@ async function getProduct (req, res) {
   }
 }
 
+async function deleteProduct (req, res) {
+  try {
+    const product = await Product.findByIdAndDelete(req.body.id)
+    res.status(200).send(product)
+  } catch (e) {
+    res.status(500).send({ error: e.message })
+  }
+}
+
 async function getProductsBySkuNameOrDescription (req, res) {
   try {
     const searchTerm = req.body.searchTerm
@@ -58,5 +67,6 @@ module.exports = {
   addProduct,
   getAllProducts,
   getProduct,
-  getProductsBySkuNameOrDescription
+  getProductsBySkuNameOrDescription,
+  deleteProduct
 }
