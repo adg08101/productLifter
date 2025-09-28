@@ -55,6 +55,10 @@ const ProductList = () => {
     loadProducts();
   }, [refresh, currentOffset, productCounter, productPaginatorLimit]);
 
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+  };
+
   useEffect(() => {
     setCurrentOffset(productPaginatorLimit * (currentPage - 1));
   }, [currentPage]);
@@ -66,9 +70,21 @@ const ProductList = () => {
         size={styleCols / productPaginatorLimit}
         props={product}
         deleteFunction={deleteProduct}
+        refreshFunction={handleRefresh}
       ></Card>
     );
   });
+
+  const productModal = () => {
+    return (
+      <ProductModal
+        submitFunction={saveProduct}
+        closeFunction={() => setShowModal(false)}
+        show={showModal}
+        refreshFunction={handleRefresh}
+      ></ProductModal>
+    );
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -80,15 +96,11 @@ const ProductList = () => {
         <Box>No products are found try adding new ones</Box>
         {
           <ProductListFooter
-            onClickFunc={() => setRefresh(!refresh)}
+            onClickFunc={handleRefresh}
             addProductFunction={() => setShowModal(true)}
           ></ProductListFooter>
         }
-        <ProductModal
-          submitFunction={saveProduct}
-          closeFunction={() => setShowModal(false)}
-          show={showModal}
-        ></ProductModal>
+        {productModal()}
       </>
     );
   } else {
@@ -97,7 +109,7 @@ const ProductList = () => {
         <Columns>{getProductsPage}</Columns>
         {
           <ProductListFooter
-            onClickFunc={() => setRefresh(!refresh)}
+            onClickFunc={handleRefresh}
             addProductFunction={() => setShowModal(true)}
           ></ProductListFooter>
         }
@@ -140,11 +152,7 @@ const ProductList = () => {
             currentPage={currentPage}
           ></Paginator>
         </Section>
-        <ProductModal
-          submitFunction={saveProduct}
-          closeFunction={() => setShowModal(false)}
-          show={showModal}
-        ></ProductModal>
+        {productModal()}
       </>
     );
   }
