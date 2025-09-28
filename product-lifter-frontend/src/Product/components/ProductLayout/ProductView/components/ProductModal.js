@@ -13,6 +13,7 @@ const ProductModal = function ProductModal({
   show,
   closeFunction,
   submitFunction,
+  refreshFunction,
 }) {
   const generateSku = () => {
     let result = "";
@@ -72,6 +73,7 @@ const ProductModal = function ProductModal({
     if (response.status === 201) {
       setResponseStyle("success");
       setResponseMessage("Product successfully added");
+      refreshFunction();
       setTimeout(() => {
         setResponse(null);
 

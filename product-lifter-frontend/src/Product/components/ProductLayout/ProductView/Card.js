@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Columns, Box, Button } from "react-bulma-components";
 
-const Card = ({ props, size, deleteFunction }) => {
+const Card = ({ props, size, deleteFunction, refreshFunction }) => {
   const handleImage = () => {
     return props.image != "undefined"
       ? props.image
@@ -9,16 +9,32 @@ const Card = ({ props, size, deleteFunction }) => {
   };
 
   const [seeOperations, setSeeOperations] = useState(false);
+  const [deleteText, setDeleteText] = useState("Delete?");
 
-  const handleOperation = async (event) => {
+  const handleAction = async (event) => {
     const operation = event.target.innerText;
     const id = event.target.id;
 
-    const response = await deleteFunction({
-      id: id,
-    });
+    deleteText === "Delete?"
+      ? setDeleteText("Delete!")
+      : setDeleteText("Delete?");
 
-    console.log(response);
+    let response = null;
+
+    if (operation === "Delete!") {
+      response = await deleteFunction({
+        id: id,
+      });
+    } else {
+      return;
+    }
+    
+    refreshFunction();
+  };
+
+  const handleOperations = () => {
+    setSeeOperations(!seeOperations);
+    setDeleteText("Delete?");
   };
 
   return (
@@ -58,7 +74,7 @@ const Card = ({ props, size, deleteFunction }) => {
             <p
               className="title is-5"
               style={{ cursor: "pointer" }}
-              onClick={() => setSeeOperations(!seeOperations)}
+              onClick={handleOperations}
             >
               Operations
             </p>
@@ -67,7 +83,7 @@ const Card = ({ props, size, deleteFunction }) => {
             <Box>
               <Button
                 colorVariant="light"
-                onClick={handleOperation}
+                onClick={handleAction}
                 id={props._id}
               >
                 Update
@@ -75,10 +91,10 @@ const Card = ({ props, size, deleteFunction }) => {
               <Button
                 className="is-pulled-right"
                 colorVariant="danger"
-                onClick={handleOperation}
+                onClick={handleAction}
                 id={props._id}
               >
-                Delete
+                {deleteText}
               </Button>
             </Box>
           ) : null}
