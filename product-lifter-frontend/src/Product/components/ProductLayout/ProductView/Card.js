@@ -14,10 +14,11 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
   const handleAction = async (event) => {
     const operation = event.target.innerText;
     const id = event.target.id;
+    const defaultDeleteAction = "Delete?";
 
-    deleteText === "Delete?"
-      ? setDeleteText("Delete!")
-      : setDeleteText("Delete?");
+    deleteText === defaultDeleteAction && operation === defaultDeleteAction
+      ? setDeleteText(defaultDeleteAction.replace("?", "!"))
+      : setDeleteText(defaultDeleteAction);
 
     let response = null;
 
@@ -28,7 +29,7 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
     } else {
       return;
     }
-    
+
     refreshFunction();
   };
 
@@ -80,23 +81,28 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
             </p>
           </div>
           {seeOperations ? (
-            <Box>
-              <Button
-                colorVariant="light"
-                onClick={handleAction}
-                id={props._id}
-              >
-                Update
-              </Button>
-              <Button
-                className="is-pulled-right"
-                colorVariant="danger"
-                onClick={handleAction}
-                id={props._id}
-              >
-                {deleteText}
-              </Button>
-            </Box>
+            <>
+              <Box style={{ display: "flow-root" }}>
+                <Button
+                  colorVariant="light"
+                  onClick={handleAction}
+                  id={props._id}
+                  style={{ minWidth: 100 + "%", marginBottom: 10 + "px" }}
+                >
+                  Update
+                </Button>
+
+                <Button
+                  className="is-pulled-right"
+                  colorVariant="danger"
+                  onClick={handleAction}
+                  id={props._id}
+                  style={{ minWidth: 100 + "%" }}
+                >
+                  {deleteText}
+                </Button>
+              </Box>
+            </>
           ) : null}
         </div>
       </div>
