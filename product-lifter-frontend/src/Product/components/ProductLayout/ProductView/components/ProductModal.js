@@ -120,12 +120,12 @@ const ProductModal = function ProductModal({
                   </Form.Label>
                   {seeSku ? (
                     <Form.Field>
-                      <Form.Label>Use / Update random created id</Form.Label>
+                      <Form.Label>Id</Form.Label>
 
                       <Form.Control>
                         <input
                           type="text"
-                          className="input is-small"
+                          className="input"
                           placeholder="Product sku"
                           name="sku"
                           value={formValues.sku}
@@ -135,22 +135,9 @@ const ProductModal = function ProductModal({
                     </Form.Field>
                   ) : null}
                 </Box>
-                <Form.Field>
-                  <Form.Control>
-                    <Form.Label>Active</Form.Label>
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="isActive"
-                        checked={formValues.isActive}
-                        onChange={handleChange}
-                      />{" "}
-                      Product activation
-                    </label>
-                  </Form.Control>
-                </Form.Field>
-                <Form.Field>
-                  <Form.Label>Upload product picture</Form.Label>
+
+                <Form.Field kind="group">
+                  <Form.Label>Image</Form.Label>
                   <Form.Control>
                     <div className="file has-name is-boxed">
                       <label className="file-label">
@@ -180,27 +167,39 @@ const ProductModal = function ProductModal({
                       </label>
                     </div>
                   </Form.Control>
+
+                  <Form.Control>
+                    <Form.Label>Active</Form.Label>
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        checked={formValues.isActive}
+                        onChange={handleChange}
+                        style={{ width: 25 + "px", height: 25 + "px" }}
+                      />
+                    </label>
+                  </Form.Control>
                 </Form.Field>
 
                 <Form.Field>
-                  <Form.Label>Write product description</Form.Label>
+                  <Form.Label>Description</Form.Label>
                   <Form.Control>
                     <textarea
-                      className="textarea is-small"
+                      className="textarea"
                       placeholder="Product description"
                       name="description"
                       value={formValues.description}
                       onChange={handleChange}
-                      style={{ "min-width": 75 + "%" }}
                     />
                   </Form.Control>
                 </Form.Field>
                 <Form.Field>
-                  <Form.Label>Write product name</Form.Label>
+                  <Form.Label>Name</Form.Label>
                   <Form.Control>
                     <input
                       type="text"
-                      className="input is-small"
+                      className="input"
                       placeholder="Product name"
                       name="name"
                       value={formValues.name}
@@ -209,7 +208,7 @@ const ProductModal = function ProductModal({
                   </Form.Control>
                 </Form.Field>
                 <Form.Field kind="group">
-                  <Form.Label>Select product category</Form.Label>
+                  <Form.Label>Category</Form.Label>
                   <Form.Control>
                     <div className="select">
                       <select
@@ -223,7 +222,8 @@ const ProductModal = function ProductModal({
                       </select>
                     </div>
                   </Form.Control>
-                  <Form.Label>Select product brand</Form.Label>
+
+                  <Form.Label>Brand</Form.Label>
                   <Form.Control>
                     <div className="select">
                       <select
@@ -238,9 +238,9 @@ const ProductModal = function ProductModal({
                     </div>
                   </Form.Control>
                 </Form.Field>
-                <Form.Field kind="group" className="is-pulled-left">
-                  <Form.Label>Write product stock</Form.Label>
-                  <Form.Control style={{ width: 20 + "%" }}>
+                <Form.Field>
+                  <Form.Label>Stock</Form.Label>
+                  <Form.Control>
                     <input
                       name="stock"
                       value={formValues.stock}
@@ -251,9 +251,10 @@ const ProductModal = function ProductModal({
                       min={0}
                     />
                   </Form.Control>
-
-                  <Form.Label>Write product price</Form.Label>
-                  <Form.Control style={{ width: 20 + "%" }}>
+                </Form.Field>
+                <Form.Field>
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control>
                     <input
                       name="price"
                       value={formValues.price}
@@ -265,18 +266,7 @@ const ProductModal = function ProductModal({
                     />
                   </Form.Control>
                 </Form.Field>
-                <Form.Field>
-                  <Form.Label>Write product price/cents</Form.Label>
-                  <Form.Control>
-                    <input
-                      className="input"
-                      type="range"
-                      min={0}
-                      max={100}
-                      placeholder="Text input"
-                    />
-                  </Form.Control>
-                </Form.Field>
+
                 <Box>
                   <Form.Label
                     style={{ cursor: "pointer" }}
@@ -285,35 +275,38 @@ const ProductModal = function ProductModal({
                     Product ratings
                   </Form.Label>
                   {seeRatings ? (
-                    <Form.Field kind="group">
-                      <Form.Label>Write product ratings rate/count</Form.Label>
-                      <Form.Control>
-                        <div className="select">
-                          <select>
-                            <option></option>
-                            <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                          </select>
-                        </div>
-                      </Form.Control>
+                    <>
+                      <Form.Field kind="group">
+                        <Form.Label>Rate</Form.Label>
+                        <Form.Control>
+                          <div className="select">
+                            <select>
+                              <option></option>
+                              <option>0</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </div>
+                        </Form.Control>
 
-                      <Form.Control>
-                        <div className="select">
-                          <select>
-                            <option></option>
-                            <option>- 100</option>
-                            <option>100 - 200</option>
-                            <option>200 - 500</option>
-                            <option>500 - 1000</option>
-                            <option>+ 1000</option>
-                          </select>
-                        </div>
-                      </Form.Control>
-                    </Form.Field>
+                        <Form.Label>Count</Form.Label>
+                        <Form.Control>
+                          <div className="select">
+                            <select>
+                              <option></option>
+                              <option>- 100</option>
+                              <option>100 - 200</option>
+                              <option>200 - 500</option>
+                              <option>500 - 1000</option>
+                              <option>+ 1000</option>
+                            </select>
+                          </div>
+                        </Form.Control>
+                      </Form.Field>
+                    </>
                   ) : null}
                 </Box>
               </Modal.Card.Body>

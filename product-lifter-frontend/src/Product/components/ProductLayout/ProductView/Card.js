@@ -81,24 +81,28 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
             </p>
           </div>
           {seeOperations ? (
-            <Box>
-              <Button
-                colorVariant="light"
-                onClick={handleAction}
-                id={props._id}
-                className="is-small"
-              >
-                Update
-              </Button>
-              <Button
-                className="is-pulled-right is-small"
-                colorVariant="danger"
-                onClick={handleAction}
-                id={props._id}
-              >
-                {deleteText}
-              </Button>
-            </Box>
+            <>
+              <Box style={{ display: "flow-root" }}>
+                <Button
+                  colorVariant="light"
+                  onClick={handleAction}
+                  id={props._id}
+                  style={{ minWidth: 100 + "%", marginBottom: 10 + "px" }}
+                >
+                  Update
+                </Button>
+
+                <Button
+                  className="is-pulled-right"
+                  colorVariant="danger"
+                  onClick={handleAction}
+                  id={props._id}
+                  style={{ minWidth: 100 + "%" }}
+                >
+                  {deleteText}
+                </Button>
+              </Box>
+            </>
           ) : null}
         </div>
       </div>
