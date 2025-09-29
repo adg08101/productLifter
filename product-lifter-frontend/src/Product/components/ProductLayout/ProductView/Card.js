@@ -14,10 +14,11 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
   const handleAction = async (event) => {
     const operation = event.target.innerText;
     const id = event.target.id;
+    const defaultDeleteAction = "Delete?";
 
-    deleteText === "Delete?"
-      ? setDeleteText("Delete!")
-      : setDeleteText("Delete?");
+    deleteText === defaultDeleteAction && operation === defaultDeleteAction
+      ? setDeleteText(defaultDeleteAction.replace("?", "!"))
+      : setDeleteText(defaultDeleteAction);
 
     let response = null;
 
@@ -28,7 +29,7 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
     } else {
       return;
     }
-    
+
     refreshFunction();
   };
 
@@ -85,11 +86,12 @@ const Card = ({ props, size, deleteFunction, refreshFunction }) => {
                 colorVariant="light"
                 onClick={handleAction}
                 id={props._id}
+                className="is-small"
               >
                 Update
               </Button>
               <Button
-                className="is-pulled-right"
+                className="is-pulled-right is-small"
                 colorVariant="danger"
                 onClick={handleAction}
                 id={props._id}

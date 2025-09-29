@@ -75,8 +75,6 @@ const ProductModal = function ProductModal({
       setResponseMessage("Product successfully added");
       refreshFunction();
       setTimeout(() => {
-        setResponse(null);
-
         handleReset();
       }, 5000);
     } else {
@@ -110,15 +108,7 @@ const ProductModal = function ProductModal({
           <Modal.Content>
             <Modal.Card>
               <Modal.Card.Header>
-                {response ? (
-                  <Block>
-                    <Notification color={responseStyle}>
-                      {response ? responseMessage : null}
-                    </Notification>
-                  </Block>
-                ) : (
-                  <Heading subtitle>Add new product</Heading>
-                )}
+                <Heading subtitle>Add new product</Heading>
               </Modal.Card.Header>
               <Modal.Card.Body>
                 <Box>
@@ -135,7 +125,7 @@ const ProductModal = function ProductModal({
                       <Form.Control>
                         <input
                           type="text"
-                          className="input"
+                          className="input is-small"
                           placeholder="Product sku"
                           name="sku"
                           value={formValues.sku}
@@ -145,7 +135,21 @@ const ProductModal = function ProductModal({
                     </Form.Field>
                   ) : null}
                 </Box>
-                <Form.Field kind="group">
+                <Form.Field>
+                  <Form.Control>
+                    <Form.Label>Active</Form.Label>
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        checked={formValues.isActive}
+                        onChange={handleChange}
+                      />{" "}
+                      Product activation
+                    </label>
+                  </Form.Control>
+                </Form.Field>
+                <Form.Field>
                   <Form.Label>Upload product picture</Form.Label>
                   <Form.Control>
                     <div className="file has-name is-boxed">
@@ -176,27 +180,18 @@ const ProductModal = function ProductModal({
                       </label>
                     </div>
                   </Form.Control>
-                  <Form.Control>
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        name="isActive"
-                        checked={formValues.isActive}
-                        onChange={handleChange}
-                      />{" "}
-                      Active
-                    </label>
-                  </Form.Control>
                 </Form.Field>
+
                 <Form.Field>
                   <Form.Label>Write product description</Form.Label>
                   <Form.Control>
                     <textarea
-                      className="textarea"
+                      className="textarea is-small"
                       placeholder="Product description"
                       name="description"
                       value={formValues.description}
                       onChange={handleChange}
+                      style={{ "min-width": 75 + "%" }}
                     />
                   </Form.Control>
                 </Form.Field>
@@ -205,7 +200,7 @@ const ProductModal = function ProductModal({
                   <Form.Control>
                     <input
                       type="text"
-                      className="input"
+                      className="input is-small"
                       placeholder="Product name"
                       name="name"
                       value={formValues.name}
@@ -322,6 +317,17 @@ const ProductModal = function ProductModal({
                   ) : null}
                 </Box>
               </Modal.Card.Body>
+
+              {response ? (
+                <Modal.Card.Body>
+                  <Block>
+                    <Notification color={responseStyle}>
+                      {response ? responseMessage : null}
+                    </Notification>
+                  </Block>
+                </Modal.Card.Body>
+              ) : null}
+
               <Modal.Card.Footer>
                 <Form.Field kind="group">
                   <Form.Control>
