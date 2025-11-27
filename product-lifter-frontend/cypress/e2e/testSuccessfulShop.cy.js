@@ -2,7 +2,7 @@ const baseUrl = Cypress.env("BASE_URL");
 
 describe("Login test", () => {
   beforeEach(() => {
-    cy.visit("https://adg08101.github.io/react-vite/");
+    cy.visit(baseUrl);
   });
 
   it("Successful login", () => {
