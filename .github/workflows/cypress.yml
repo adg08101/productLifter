@@ -17,31 +17,22 @@ jobs:
 
       - name: Clean workspace
         run: |
-          rm -rf node_modules
-          rm -f package-lock.json
+          rm -rf product-lifter-frontend/node_modules
+          rm -f product-lifter-frontend/package-lock.json
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install dependencies (frontend)
+        working-directory: product-lifter-frontend
         run: npm install
 
-      - name: Start Vite dev server
-        run: npm run dev &
-        env:
-          CI: true
-
-      - name: Wait for Vite (http://localhost:5173)
-        uses: ifaxity/wait-on-action@v1
-        with:
-          resource: https://adg08101.github.io/react-vite/
-          timeout: 60000
-
-      - name: Run Cypress tests
+      - name: Run Cypress tests (against GitHub Pages)
         uses: cypress-io/github-action@v6
         with:
+          working-directory: product-lifter-frontend
           browser: chrome
           headless: true
           config: baseUrl=https://adg08101.github.io/react-vite/
@@ -51,11 +42,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: product-lifter-frontend/cypress/videos
 
       - name: Upload Cypress screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: product-lifter-frontend/cypress/screenshots
