@@ -25,15 +25,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies (frontend)
+      - name: Install dependencies manually (npm install)
         working-directory: product-lifter-frontend
         run: npm install
 
-      - name: Run Cypress tests (on GitHub Pages URL)
+      - name: Run Cypress tests (no npm ci)
         uses: cypress-io/github-action@v6
         with:
           working-directory: product-lifter-frontend
           browser: chrome
+          install: false                 # 🚀 do NOT run npm ci
           config: baseUrl=https://adg08101.github.io/react-vite/
 
       - name: Upload Cypress videos
