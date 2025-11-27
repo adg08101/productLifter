@@ -17,6 +17,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
       - name: Clean workspace (remove node_modules + lock file)
         run: |
           rm -rf node_modules
@@ -25,10 +30,5 @@ jobs:
           # rm -f yarn.lock
         working-directory:
           ./product-lifter-frontend
-    
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
     
         
