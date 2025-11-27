@@ -36,6 +36,8 @@ jobs:
           browser: chrome
           install: false                 # 🚀 do NOT run npm ci
           config: baseUrl=https://adg08101.github.io/react-vite/
+        env:
+          BASE_URL: https://adg08101.github.io/react-vite/
 
       - name: Upload Cypress videos
         if: always()
