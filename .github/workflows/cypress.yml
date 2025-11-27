@@ -20,21 +20,20 @@ jobs:
           rm -rf product-lifter-frontend/node_modules
           rm -f product-lifter-frontend/package-lock.json
 
-      - name: Setup Node
+      - name: Setup Node (Node 22 required)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies (frontend)
         working-directory: product-lifter-frontend
         run: npm install
 
-      - name: Run Cypress tests (against GitHub Pages)
+      - name: Run Cypress tests (on GitHub Pages URL)
         uses: cypress-io/github-action@v6
         with:
           working-directory: product-lifter-frontend
           browser: chrome
-          headless: true
           config: baseUrl=https://adg08101.github.io/react-vite/
 
       - name: Upload Cypress videos
