@@ -5,7 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  workflow_dispatch:   # manual trigger
+  workflow_dispatch:
 
 jobs:
   cypress-run:
@@ -15,12 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Clean workspace (remove node_modules + lock file)
+      - name: Clean workspace
         run: |
           rm -rf node_modules
           rm -f package-lock.json
-          # Uncomment if yarn is ever used:
-          # rm -f yarn.lock
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -36,17 +34,16 @@ jobs:
           CI: true
 
       - name: Wait for Vite (http://localhost:5173)
-        uses: jakejarvis/wait-action@v0.2.0
+        uses: ifaxity/wait-on-action@v1
         with:
-          url: 'http://localhost:5173'
-          timeout: 60
+          resource: http-get://localhost:5173
+          timeout: 60000
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
           headless: true
-          start: ''  # vite already started
           config: baseUrl=http://localhost:5173
 
       - name: Upload Cypress videos
