@@ -1,34 +1,64 @@
-name: cypress_tests
+name: Cypress Tests - productLifter
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
   pull_request:
-    branches:
-      - master
+    branches: [ main ]
+  workflow_dispatch:   # manual trigger
 
-  workflow_dispatch:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Clean workspace (remove node_modules + lock file)
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          # Uncomment if yarn is ever used:
+          # rm -f yarn.lock
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          
-      - name: Clean workspace (remove node_modules + lock file)
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
-          # Uncomment if you use yarn:
-          # rm -f yarn.lock
-        working-directory:
-          ./product-lifter-frontend
-    
-        
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Vite dev server
+        run: npm run dev &
+        env:
+          CI: true
+
+      - name: Wait for Vite (http://localhost:5173)
+        uses: jakejarvis/wait-action@v0.2.0
+        with:
+          url: 'http://localhost:5173'
+          timeout: 60
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          headless: true
+          start: ''  # vite already started
+          config: baseUrl=http://localhost:5173
+
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
