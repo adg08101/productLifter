@@ -36,7 +36,7 @@ jobs:
       - name: Wait for Vite (http://localhost:5173)
         uses: ifaxity/wait-on-action@v1
         with:
-          resource: http-get://localhost:5173
+          resource: https://adg08101.github.io/react-vite/
           timeout: 60000
 
       - name: Run Cypress tests
@@ -44,7 +44,7 @@ jobs:
         with:
           browser: chrome
           headless: true
-          config: baseUrl=http://localhost:5173
+          config: baseUrl=https://adg08101.github.io/react-vite/
 
       - name: Upload Cypress videos
         if: always()
